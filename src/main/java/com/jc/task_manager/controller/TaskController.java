@@ -14,8 +14,8 @@ public class TaskController {
     @Autowired
     TaskService taskService;
     List<Task> tasks = new ArrayList<>(List.of(
-            new Task(8L, "Learn Java", "Core Java", "Not Completed"),
-            new Task(9L, "Learn Java Spring Core", "Spring", "Not Completed")
+            new Task(9L, "Learn Java", "Core Java", "Not Completed"),
+            new Task(10L, "Learn Java Spring Core", "Spring", "Not Completed")
     ));
 
     public void createTasks() {
@@ -31,8 +31,8 @@ public class TaskController {
     }
 
     public List<Task> getTasks() {
-        Task task1 = taskService.getTask(1L);
-        Task task2 = taskService.getTask(2L);
+        Task task1 = taskService.getTask(9L);
+        Task task2 = taskService.getTask(10L);
         return new ArrayList<>(List.of(task1, task2));
     }
 

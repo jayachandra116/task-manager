@@ -10,8 +10,12 @@ import java.util.List;
 @Service
 public class TaskService {
 
+    private final TaskRepository taskRepository;
+
     @Autowired
-    private TaskRepository taskRepository;
+    public TaskService(TaskRepository taskRepository) {
+        this.taskRepository = taskRepository;
+    }
 
     public void addTask(Task task) {
         taskRepository.save(task);
