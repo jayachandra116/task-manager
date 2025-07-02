@@ -4,11 +4,11 @@ import com.jc.task_manager.model.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-@Component
+@Repository
 public class TaskRepository {
 
     @Autowired
@@ -37,6 +37,18 @@ public class TaskRepository {
     public int deleteById(Long id) {
         String sql = "DELETE FROM tasks WHERE id=?";
         return jdbcTemplate.update(sql, id);
+    }
+
+    public void markAsDone(Long id) {
+        String sql = "UPDATE tasks SET status='Completed' WHERE id=?";
+        jdbcTemplate.update(sql, id);
+        return;
+    }
+
+    public void markAsUnDone(Long id) {
+        String sql = "UPDATE tasks SET status='Not Completed' WHERE id=?";
+        jdbcTemplate.update(sql, id);
+        return;
     }
 
 }
