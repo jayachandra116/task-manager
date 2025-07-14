@@ -1,6 +1,7 @@
 package com.jc.task_manager.controller;
 
-import com.jc.task_manager.model.Task;
+import com.jc.task_manager.dto.TaskRequest;
+import com.jc.task_manager.dto.TaskResponse;
 import com.jc.task_manager.service.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -11,39 +12,43 @@ import java.util.List;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/tasks")
 public class TaskController {
 
     @Autowired
-    private TaskService taskService;
+    private final TaskService taskService;
 
-    @PostMapping("/task")
-    public ResponseEntity<Task> createTask(@RequestBody Task task) {
+    public TaskController(TaskService taskService) {
+        this.taskService = taskService;
+    }
+
+    @PostMapping
+    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
         System.out.println("POST /api/tasks => Creating new task");
-        Task createdTask = taskService.createTask(task);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTask);
+        return ResponseEntity
+                .status(HttpStatus.CREATED)
+                .body(taskService.createTask(taskRequest));
     }
 
-    @GetMapping("/tasks")
-    public ResponseEntity<List<Task>> getAllTasks() {
+    @GetMapping
+    public List<TaskResponse> getAllTasks() {
         System.out.println("GET /api/tasks => Fetching all tasks");
-        return ResponseEntity.ok(taskService.getAllTasks());
+        return taskService.getAllTasks();
     }
 
-    @GetMapping("/task/{id}")
-    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+    @GetMapping("/{id}")
+    public TaskResponse getTaskById(@PathVariable Long id) {
         System.out.println("GET /api/task/{id} => Fetching a single task with id: " + id);
-        return ResponseEntity.ok(taskService.getTaskById(id));
+        return taskService.getTaskById(id);
     }
 
-    @PutMapping("/task/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    @PutMapping("/{id}")
+    public TaskResponse updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
         System.out.println("PUT /api/task/{id} => Updating a task with id: " + id);
-        Task updatedTask = taskService.updateTask(id, task);
-        return ResponseEntity.ok(updatedTask);
+        return taskService.updateTask(id, taskRequest);
     }
 
-    @DeleteMapping("/task/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
         System.out.println("DELETE /api/task/{id} => Deleting a task with id: " + id);
         taskService.deleteTask(id);

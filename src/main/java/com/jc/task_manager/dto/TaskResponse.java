@@ -1,19 +1,18 @@
-package com.jc.task_manager.model;
+package com.jc.task_manager.dto;
 
+import com.jc.task_manager.model.TaskPriority;
+import com.jc.task_manager.model.TaskStatus;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
-@NoArgsConstructor
-@AllArgsConstructor
-@Component
-public class Task {
-
+@Builder
+public class TaskResponse {
     private Long id;
     private String title;
     private String description;
@@ -22,5 +21,4 @@ public class Task {
     private LocalDate dueDate;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
-
 }
