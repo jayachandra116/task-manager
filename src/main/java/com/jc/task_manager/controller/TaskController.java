@@ -3,6 +3,7 @@ package com.jc.task_manager.controller;
 import com.jc.task_manager.dto.TaskRequest;
 import com.jc.task_manager.dto.TaskResponse;
 import com.jc.task_manager.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,7 +24,7 @@ public class TaskController {
     }
 
     @PostMapping
-    public ResponseEntity<TaskResponse> createTask(@RequestBody TaskRequest taskRequest) {
+    public ResponseEntity<TaskResponse> createTask(@Valid @RequestBody TaskRequest taskRequest) {
         System.out.println("POST /api/tasks => Creating new task");
         return ResponseEntity
                 .status(HttpStatus.CREATED)
@@ -43,7 +44,7 @@ public class TaskController {
     }
 
     @PutMapping("/{id}")
-    public TaskResponse updateTask(@PathVariable Long id, @RequestBody TaskRequest taskRequest) {
+    public TaskResponse updateTask(@PathVariable Long id,@Valid @RequestBody TaskRequest taskRequest) {
         System.out.println("PUT /api/task/{id} => Updating a task with id: " + id);
         return taskService.updateTask(id, taskRequest);
     }
